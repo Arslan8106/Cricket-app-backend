@@ -10,7 +10,6 @@ class Api::V1::MatchesController < ApplicationController
   end
 
   def create
-    binding.pry
     @match = Match.create(match_params)
     if @match.save
       render json: { match: @match }
