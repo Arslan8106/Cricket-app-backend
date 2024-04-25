@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_26_050701) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_24_130558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "match_stats", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "match_id", null: false
+    t.integer "team_score"
+    t.integer "overs"
+    t.integer "wickets"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_stats_on_match_id"
+    t.index ["team_id"], name: "index_match_stats_on_team_id"
+  end
 
   create_table "matches", force: :cascade do |t|
     t.string "venue"
@@ -24,6 +36,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_26_050701) do
     t.bigint "team2_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "completed", default: false
+    t.string "status"
     t.index ["team1_id"], name: "index_matches_on_team1_id"
     t.index ["team2_id"], name: "index_matches_on_team2_id"
   end
@@ -60,11 +74,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_26_050701) do
     t.string "authentication_token"
     t.string "role", null: false
     t.bigint "team_id"
+    t.string "player_type"
+    t.string "age"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "match_stats", "matches"
+  add_foreign_key "match_stats", "teams"
   add_foreign_key "matches", "teams", column: "team1_id"
   add_foreign_key "matches", "teams", column: "team2_id"
   add_foreign_key "team_players", "teams"

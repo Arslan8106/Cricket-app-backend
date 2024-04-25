@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team: one
+  match: one
+  team_score: 1
+  overs: 1
+  wickets: 1
+
+two:
+  team: two
+  match: two
+  team_score: 1
+  overs: 1
+  wickets: 1
