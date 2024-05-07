@@ -5,6 +5,11 @@ class Api::V1::MatchesController < ApplicationController
     @teams = Team.pluck(:name, :id).map { |name, id| { label: name, value: id } }
     @teams_data = Team.all
     @upcoming_matches = Match.today_onwards.order(id: :desc)
+    @completed_matches = Match.where(completed: true)
+    @team1 = @completed_matches.map { |match| match.team1 }
+    @team2 = @completed_matches.map { |match| match.team2 }
+    @team1stats = @completed_matches.map { |match| match.team1_match_stat }
+    @team2stats = @completed_matches.map { |match| match.team2_match_stat }
   end
 
   def new
