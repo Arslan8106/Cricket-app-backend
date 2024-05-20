@@ -8,7 +8,7 @@ class Api::V1::TeamsController < ApplicationController
   end
 
   def create
-    user_id = params.dig("team", "user", "user", "user", "id")
+    user_id = params[:id]
     @user = User.find_by(id: user_id)
     @team = @user.build_team(team_params)
     if @user.save
@@ -17,7 +17,7 @@ class Api::V1::TeamsController < ApplicationController
   end
 
   def fetch_team
-    user_id = params.dig("user", "user", "id")
+    user_id = params[:id]
     @user = User.find_by(id: user_id)
     if @user.team
       render json: { team: @user.team, players: @user.team.users }

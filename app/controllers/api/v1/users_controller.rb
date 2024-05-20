@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create_team_player
-    user_id = params[:user][:user][:user][:id]
+    user_id = params[:user][:id]
     team_id = User.find(user_id).team_id
     team = Team.find_by(id: team_id)
     players_data = params[:players]
