@@ -8,7 +8,7 @@ class Api::V1::TeamsController < ApplicationController
   end
 
   def create
-    user_id = params[:id]
+    user_id = params[:team][:user][:id]
     @user = User.find_by(id: user_id)
     @team = @user.build_team(team_params)
     if @user.save
