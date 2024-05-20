@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_24_130558) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_20_082126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_130558) do
     t.datetime "updated_at", null: false
     t.boolean "completed", default: false
     t.string "status"
+    t.string "team1_name"
+    t.integer "team1_score"
+    t.integer "team1_overs"
+    t.integer "team1_wickets"
+    t.string "team2_name"
+    t.integer "team2_score"
+    t.integer "team2_overs"
+    t.integer "team2_wickets"
     t.index ["team1_id"], name: "index_matches_on_team1_id"
     t.index ["team2_id"], name: "index_matches_on_team2_id"
   end
@@ -76,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_130558) do
     t.bigint "team_id"
     t.string "player_type"
     t.string "age"
+    t.string "batting_style"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"

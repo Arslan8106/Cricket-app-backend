@@ -19,7 +19,8 @@ class Api::V1::UsersController < ApplicationController
         password: '111111',
         password_confirmation: '111111',
         role: 'Player',
-        team_id: team_id
+        team_id: team_id,
+        batting_style: player_data[:batting_style]
       )
       team.team_players.create(user: user)
 
@@ -36,7 +37,7 @@ class Api::V1::UsersController < ApplicationController
 
   private
   def update_user_params
-    params.require(:user).permit(:username, :email, :player_type, :age)
+    params.require(:user).permit(:username, :email, :player_type, :age, :batting_style)
   end
 
   def set_user

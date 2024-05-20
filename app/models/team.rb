@@ -1,7 +1,12 @@
 class Team < ApplicationRecord
-  has_many :team_players
+  has_many :team_players, dependent: :destroy
   has_many :users, through: :team_players
-  belongs_to :match , optional: true
-  has_one :match_stat
 
+  before_destroy :handle_users
+
+  private
+
+  def handle_users
+    users.update_all(team_id: nil) # This sets the team_id in users to null
+  end
 end

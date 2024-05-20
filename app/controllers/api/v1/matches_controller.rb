@@ -5,11 +5,7 @@ class Api::V1::MatchesController < ApplicationController
     @teams = Team.pluck(:name, :id).map { |name, id| { label: name, value: id } }
     @teams_data = Team.all
     @upcoming_matches = Match.today_onwards.order(id: :desc)
-    @completed_matches = Match.where(completed: true)
-    @team1 = @completed_matches.map { |match| match.team1 }
-    @team2 = @completed_matches.map { |match| match.team2 }
-    @team1stats = @completed_matches.map { |match| match.team1_match_stat }
-    @team2stats = @completed_matches.map { |match| match.team2_match_stat }
+    @completed_matches = Match.where(completed: true).order(id: :desc)
   end
 
   def new
@@ -29,6 +25,14 @@ class Api::V1::MatchesController < ApplicationController
       render json: { match: @match }
     else
       respond_with_error "Unable to update match", :not_found
+    end
+  end
+  def destroy
+    @match = Match.find(params[:id])
+    if @match.destroy
+      render json: { success: true, message: "Match deleted successfully" }, status: :ok
+    else
+      respond_with_error "Match can't be deleted", :not_found
     end
   end
 
@@ -52,7 +56,7 @@ class Api::V1::MatchesController < ApplicationController
     end
   end
   def update_match_params
-    params.require(:match).permit(:id, :completed, :status)
+    params.require(:match).permit(:id, :completed, :status, :team1_score, :team2_score, :team1_overs, :team2_overs, :team1_wickets, :team2_wickets, :team1_name, :team2_name)
   end
 
   def set_match
